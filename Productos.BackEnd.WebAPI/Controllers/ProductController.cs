@@ -19,7 +19,7 @@ namespace Productos.BackEnd.WebAPI.Controllers
         /// Constructor del controlador
         /// </summary>
         /// <param name="productService"></param>
-        public ProductController(IProductService productService )
+        public ProductController(IProductService productService)
         {
             this._productService = productService;
         }
@@ -88,7 +88,7 @@ namespace Productos.BackEnd.WebAPI.Controllers
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(ProductModelListExample))]
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetAllProducts([FromQuery] int pageNumber = 0, [FromQuery] int pageSize = 0)
+        public async Task<IActionResult> GetAllProducts([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             var result = await _productService.GetAllAsync(pageNumber, pageSize);
             return Ok(result.Data);
