@@ -83,26 +83,18 @@ namespace Productos.BackEnd.Business.Services
         /// <param name="pageNumber"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        new public async Task<DataPaginationModel<ProductModel>> GetAllAsync(int pageNumber = 0, int pageSize = 0)
-        {
-            var query = new GetAllProductsQuery
+            public async Task<DataPaginationModel<ProductResponseModel>> GetAllAsync(int pageNumber = 0, int pageSize = 0)
             {
-                Pagination = new DataPaginationModel<ProductModel>
+                var query = new GetAllProductsQuery(1, new DataPaginationModel<Product>
                 {
                     PageNumber = pageNumber,
                     PageSize = pageSize
-                }
-            };
+                });
 
-            var response = await _mediator.Send(query);
-            return new DataPaginationModel<ProductModel>
-            {
-                TotalSize = response.Count(),
-                Data = _mapper.Map<List<ProductModel>>(response)
-            };
+                var response = await _mediator.Send(query);
 
-
-        }
+                return response;
+            }
 
         /// <summary>
         /// Recoge un producto por su identificador

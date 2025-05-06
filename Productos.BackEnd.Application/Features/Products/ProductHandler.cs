@@ -16,7 +16,7 @@ namespace Productos.BackEnd.Application.Features.Products
     /// <summary>
     /// Clase que trabaja con el repositorio de productos y los mapea
     /// </summary>
-    public class ProductHandler : IRequestHandler<GetAllProductsQuery, IEnumerable<ProductResponseModel>>,
+    public class ProductHandler : IRequestHandler<GetAllProductsQuery, DataPaginationModel<ProductResponseModel>>,
         IRequestHandler<GetProductsByIdQuery, ProductResponseModel>,
         IRequestHandler<CreateProductCommand, OkResponseModel>,
         IRequestHandler<UpdateProductCommand, OkResponseModel>,
@@ -36,7 +36,7 @@ namespace Productos.BackEnd.Application.Features.Products
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<ProductResponseModel>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
+        public async Task<DataPaginationModel<ProductResponseModel>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
             var pagination = new DataPaginationModel<Product>
             {
@@ -45,7 +45,7 @@ namespace Productos.BackEnd.Application.Features.Products
             };
 
             var products = await _productRepository.GetAllAsync(pagination);
-            return _mapper.Map<IEnumerable<ProductResponseModel>>(products);
+            return _mapper.Map<DataPaginationModel<ProductResponseModel>>(products);
         }
         /// <summary>
         /// Recoge un solo producto

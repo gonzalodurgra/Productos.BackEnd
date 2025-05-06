@@ -37,6 +37,13 @@ namespace Productos.BackEnd.Application.Mappings
             CreateMap<UpdateProductCommand, Product>().ReverseMap();
 
             CreateMap<DeleteProductCommand, Product>().ReverseMap();
+
+            CreateMap<List<Product>, DataPaginationModel<ProductResponseModel>>()
+                .ConvertUsing((src, dest, context) => new DataPaginationModel<ProductResponseModel>
+                {
+                    Data = context.Mapper.Map<List<ProductResponseModel>>(src),
+                    TotalSize = src.Count
+                });
         }
     }
 }
